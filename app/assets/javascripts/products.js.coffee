@@ -2,8 +2,17 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-@load_products = ()  ->
-  $.ajax '/products',
+
+@load_products = (param)  ->
+  if param
+    path = '/products'+param
+  else
+    path = '/products'
+  console.log param
+  $("#product-header").removeClass("hidden")
+  $("#order-header").addClass("hidden")
+  $("#user-header").addClass("hidden")
+  $.ajax path,
     type: 'GET'
     dataType: 'json'
     error: (jqXHR, textStatus, errorThrown) ->
@@ -28,3 +37,19 @@
         $("#"+new_id+" div a.browser-list-cell-title-link").attr("href", "/products/"+prod.id)
         $("#"+new_id+" div div.browser-meta span").html(
             "Product created "+prod.product_age+" ago")
+
+  $("#product-sort-button").click () ->
+    $("#product-sort-menu").removeClass("hidden")
+
+
+  $("#order-by-product-name-button").click (event) ->
+    event.preventDefault()
+    load_products("?sortbyAsc=name")
+
+  $("#order-by-product-date-button").click (event) ->
+    event.preventDefault()
+    load_products("?sortbyDesc=created_at")
+
+  $("body").delegate("#select-header span", "click", () ->
+    $("#product-sort-menu").addClass("hidden")
+  )

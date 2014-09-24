@@ -27,16 +27,97 @@
                     <a id="order-stat-closed" href="#" class="button-link"><i class="fa fa-check"></i> 2 Completed</a>
                 </div>
                 <div class="browser-list-header-toggle right">
-                    <div class="left select-menu">
-                        <span class="button-link select-menu-button">
-                            Status
-                        </span>
-                        <span class="button-link select-menu-button">
-                            Created by
-                        </span>
-                        <span class="button-link select-menu-button">
-                            Sort
-                        </span>
+                  <div class="left select-menu">
+
+
+                        <div id="order-header" class="hidden">
+                            <span id="order-sort-status-button" class="button-link select-menu-button">
+                                Status
+                            </span>
+                            <div id="order-sort-status-menu" class="select-box-holder hidden">
+                                <div id="select-header" class="select-box-header">
+                                    Status
+                                    <span id="select-menu-close" class="select-menu-close fa fa-close"></span>
+                                </div>
+                                <div class="select-box">
+                                    <ul style="list-style-type: none;">
+                                        <li><div id="checkic" class="hidden fa fa-check"></div> <a id="completed-button" class="list-button-link">Completed</a></li>
+                                        <li><div id="checkic" class="hidden fa fa-check"></div><a id="uncompleted-button" class="list-button-link">Uncompleted</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <span id="order-sort-created-by-button" class="button-link select-menu-button">
+                                Created by
+                            </span>
+                            <div id="order-sort-created-by-menu" class="select-box-holder hidden">
+                                <div id="select-header" class="select-box-header">
+                                    Created by
+                                    <span id="select-menu-close" class="select-menu-close fa fa-close"></span>
+                                </div>
+                                <div class="select-box">
+                                    <ul id="user-selection-list">
+
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <span id="order-sort-date-button" class="button-link select-menu-button">
+                                Sort
+                            </span>
+                            <div id="order-sort-date-menu" class="select-box-holder hidden">
+                                <div id="select-header" class="select-box-header">
+                                    Sort by
+                                    <span id="select-menu-close" class="select-menu-close fa fa-close"></span>
+                                </div>
+                                <div class="select-box">
+                                    <ul>
+                                        <li><a id="sortbydate-asc-button" class="list-button-link">Oldest</a></li>
+                                        <li><a id="sortbydate-desc-button" class="list-button-link">Newest</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+
+                      <div id="product-header" class="hidden">
+                            <span id="product-sort-button" class="button-link select-menu-button">
+                                Sort
+                            </span>
+                          <div id="product-sort-menu" class="select-box-holder hidden">
+                              <div id="select-header" class="select-box-header">
+                                  Sort by
+                                  <span id="select-menu-close" class="select-menu-close fa fa-close"></span>
+                              </div>
+                              <div class="select-box">
+                                  <ul>
+                                     <li><a id="order-by-product-name-button" class="list-button-link">Name</a></li>
+                                    <li><a id="order-by-product-date-button" class="list-button-link">Date</a></li>
+                                  </ul>
+                              </div>
+                          </div>
+                      </div>
+
+
+                      <div id="user-header" class="hidden">
+                            <span id="user-sort-button" class="button-link select-menu-button">
+                                Sort
+                            </span>
+                          <div id="user-sort-menu" class="select-box-holder hidden">
+                              <div id="select-header" class="select-box-header">
+                                  Sort by
+                                  <span id="select-menu-close" class="select-menu-close fa fa-close"></span>
+                              </div>
+                              <div class="select-box">
+                                  <ul>
+                                     <li><a id="order-by-user-name-button" class="list-button-link">Name</a></li>
+                                    <li><a id="order-by-user-date-button" class="list-button-link">Date</a></li>
+                                  </ul>
+                              </div>
+                          </div>
+                      </div>
+
+
                     </div>
                 </div>
             </div>
@@ -55,6 +136,15 @@
     </div>
 
 
+    <div class="hidden">
+        <ul>
+            <li id="list_useritem_template">
+                <div class="list-cell">
+                    <a class="list-cell-title-link"></a>
+                </div>
+            </li>
+        </ul>
+    </div>
 
     <div class="hidden">
         <ul>
@@ -80,5 +170,6 @@
 <script type="text/javascript">
     browser_menu();
     load_orders();
+    load_user_filter();
 
 </script>

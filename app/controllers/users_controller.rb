@@ -4,7 +4,13 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    if params[:sortbyAsc]
+      @users = User.order(params[:sortbyAsc]+' ASC')
+    elsif params[:sortbyDesc]
+      @users = User.order(params[:sortbyDesc]+' DESC')
+    else
+      @users = User.all
+    end
   end
 
   # GET /users/1

@@ -126,10 +126,32 @@
 
 }
 
+.list-button-link {
+  display: inline;
+  padding: 0;
+  font-size: inherit;
+  color: #777;
+  white-space: nowrap;
+  cursor: pointer;
+  background-color: transparent;
+  border: 0;
+  text-decoration: none;
+}
+
+
+.list-button-link:hover {
+   background-color: transparent;
+   color: #222;
+}
 
 .select-menu {
   position: relative;
 }
+
+.select-menu-close {
+  float: right;
+}
+
 .select-menu-button:after {
   display: inline-block;
   width: 0;
@@ -140,6 +162,35 @@
   border-right-color: transparent;
   border-left-color: transparent;
   border-bottom-color: transparent;
+}
+
+.select-box-holder{
+  position: absolute;
+  z-index: 21;
+  top: 50px;
+  right: 10px;
+}
+
+.select-box-header {
+  padding: 8px 10px;
+  background: #f5f5f5;
+  border: 1px solid rgba(200,200,200,0.4);
+  border-radius: 3px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+}
+
+.select-box {
+  position: relative;
+  width: 300px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  font-size: 12px;
+  color: #666;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(200,200,200,0.4);
+  border-radius: 3px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.15);
 }
 
 .browser-list-header-toggle .select-menu-button {

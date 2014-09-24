@@ -1,7 +1,13 @@
 class ProductsController < ApplicationController
 
   def index
-    @products = Product.all
+    if params[:sortbyAsc]
+      @products = Product.order(params[:sortbyAsc]+' ASC')
+    elsif params[:sortbyDesc]
+      @products = Product.order(params[:sortbyDesc]+' DESC')
+    else
+      @products = Product.all
+    end
   end
 
   def new

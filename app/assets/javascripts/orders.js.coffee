@@ -2,8 +2,8 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-@load_orders = ()  ->
-  $.ajax '/orders',
+@load_user_filter = ()  ->
+  $.ajax '/users',
     type: 'GET'
     dataType: 'json'
     error: (jqXHR, textStatus, errorThrown) ->
@@ -12,8 +12,45 @@
       console.log "Successful AJAX call"
       console.log data
 
-      $("#order-stat-open").html("<i class=\"fa fa-arrow-circle-o-up\"></i> "+data[0].num_opened+" Open")
-      $("#order-stat-closed").html("<i class=\"fa fa-check\"></i> "+data[0].num_closed+" Completed")
+      i = 0
+      $("#user-selection-list").empty()
+      for user in data
+        new_user = $("#list_useritem_template").clone()
+        new_id =  "usr-" + i
+        new_user.attr('id', new_id)
+        if i == 0
+          $("ul#user-selection-list").html(new_user)
+        else
+          new_user.insertAfter($("ul#user-selection-list").children().last())
+        i = i+1
+
+        $("#"+new_id+" div a").html(user.name)
+        $("#"+new_id+" div a").attr("id", "findbyuser-button")
+        $("#"+new_id+" div a").attr("value", user.id)
+        $("#"+new_id+" div a").attr("class", "list-button-link")
+
+
+@load_orders = (param)  ->
+  $("#order-header").removeClass("hidden")
+  $("#product-header").addClass("hidden")
+  $("#user-header").addClass("hidden")
+  if param
+    path = '/orders'+param
+  else
+    path = '/orders'
+  console.log param
+  $.ajax path,
+    type: 'GET'
+    dataType: 'json'
+    error: (jqXHR, textStatus, errorThrown) ->
+      console.log "AJAX Error: #{textStatus}"
+    success: (data, textStatus, jqXHR) ->
+      console.log "Successful AJAX call"
+      console.log data
+
+#      if data[0].num_opened and data[0].num_closed
+#        $("#order-stat-open").html("<i class=\"fa fa-arrow-circle-o-up\"></i> "+data[0].num_opened+" Open")
+#        $("#order-stat-closed").html("<i class=\"fa fa-check\"></i> "+data[0].num_closed+" Completed")
 
       i = 0
       $("#orders-table").empty()
@@ -169,8 +206,47 @@
               console.log "PATHCH ORDER  Successful AJAX call"
         window.location.assign( "/pages/browser")
 
-#        $("#orders-table").removeClass("hidden")
-#        $("#browser-list-header-tab").removeClass("hidden")
-#        $("#new-order-table").addClass("hidden")
+  $("#order-sort-status-button").click () ->
+    $("#order-sort-status-menu").removeClass("hidden")
+    $("#order-sort-created-by-menu").addClass("hidden")
+    $("#order-sort-date-menu").addClass("hidden")
 
+  $("#order-sort-date-button").click () ->
+    $("#order-sort-date-menu").removeClass("hidden")
+    $("#order-sort-status-menu").addClass("hidden")
+    $("#order-sort-created-by-menu").addClass("hidden")
+
+  $("#order-sort-created-by-button").click () ->
+    $("#order-sort-created-by-menu").removeClass("hidden")
+    $("#order-sort-date-menu").addClass("hidden")
+    $("#order-sort-status-menu").addClass("hidden")
+
+
+  $("#completed-button").click (event) ->
+    event.preventDefault()
+    
+    load_orders("?findbyStatus=1")
+
+  $("#uncompleted-button").click (event) ->
+    event.preventDefault()
+    load_orders("?findbyStatus=0")
+
+  $("#sortbydate-asc-button").click (event) ->
+    event.preventDefault()
+    load_orders("?sortbyAsc=order_date")
+
+  $("#sortbydate-desc-button").click (event) ->
+    event.preventDefault()
+    load_orders("?sortbyDesc=order_date")
+
+  $("body").delegate("#user-selection-list li", "click", () ->
+    a_clicked = event.toElement
+    load_orders("?findbyId="+a_clicked.getAttribute("value"))
+    )
+
+  $("body").delegate("#select-header span", "click", () ->
+    $("#order-sort-status-menu").addClass("hidden")
+    $("#order-sort-created-by-menu").addClass("hidden")
+    $("#order-sort-date-menu").addClass("hidden")
+  )
 

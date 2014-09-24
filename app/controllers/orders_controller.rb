@@ -4,10 +4,22 @@ class OrdersController < ApplicationController
   # GET /orders
   # GET /orders.json
   def index
-    @orders = Order.all
+     if params[:sortbyAsc]
+         @orders = Order.order(params[:sortbyAsc]+' ASC')
+     elsif params[:sortbyDesc]
+         @orders = Order.order(params[:sortbyDesc]+' DESC')
+     elsif params[:findbyId]
+         @orders = Order.where('user_id='+params[:findbyId])
+     elsif params[:findbyStatus]
+         @orders = Order.where('status='+params[:findbyStatus])
+     else
+         @orders = Order.all
+     end
+
     # TODO separate this into a new action, or something...
     @num_opened = Order.where("status=0").size
     @num_closed = Order.where("status=1").size
+    @users = User.all
   end
 
   # GET /orders/1
